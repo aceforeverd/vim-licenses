@@ -208,6 +208,7 @@ function! s:insertLicense(licenseFileName, secondLineEmpty)
 
     let line1 = getline(1)
 
+    let l:currFileName = expand('%')
     if line1 =~# '^#!/' || line1 =~# '^#compdef'
         if line('$') < 2
             normal! o
@@ -217,16 +218,20 @@ function! s:insertLicense(licenseFileName, secondLineEmpty)
         let lineCounteBefore = line('$')
 
         execute 'keepalt 2read ' . expand(a:licenseFileName)
+        call append(2, l:currFileName)
     elseif s:isFileType('php') && line1 =~# '^<?php'
         let lineCounteBefore = line('$')
 
         if a:secondLineEmpty
             execute 'keepalt 2read ' . expand(a:licenseFileName)
+            call append(2, l:currFileName)
         else
             execute 'keepalt 1read ' . expand(a:licenseFileName)
+            call append(1, l:currFileName)
         endif
     else
         execute 'keepalt 0read ' . expand(a:licenseFileName)
+        call append(0, l:currFileName)
     endif
 
     let lineCountAfter = line('$')
