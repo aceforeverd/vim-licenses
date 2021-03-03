@@ -81,6 +81,9 @@ let s:filetypeCommentDelimiters = {
     \'cmake': {
         \'singlelineStart': '# '
     \},
+    \'dockerfile': {
+        \'singlelineStart': '# '
+    \},
     \'haskell': {
         \'end': '-}',
         \'middle': ' - ',
