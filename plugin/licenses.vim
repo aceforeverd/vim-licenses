@@ -99,6 +99,17 @@ let s:licensesPath = expand('<sfile>:p:h:h') . '/licenses/'
 " Insert and comment the provided license.
 function! InsertLicense(name)
     " Check if the license is already in the buffer.
+
+    " add missing header first
+    if &filetype ==# 'python'
+        if getline(1) !~# '^#!/'
+            call append(0, '#!/usr/bin/env python3')
+        endif
+        if getline(2) !~# '# -*- coding: utf-8 -*-'
+            call append(1, '# -*- coding: utf-8 -*-')
+        endif
+    endif
+
     let licenseFileName = s:licensesPath . a:name . '.txt'
     if filereadable(expand(licenseFileName))
         let fileContent = readfile(expand(licenseFileName))
