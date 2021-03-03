@@ -208,7 +208,7 @@ function! s:insertLicense(licenseFileName, secondLineEmpty)
 
     let line1 = getline(1)
 
-    let l:currFileName = expand('%')
+    let l:currFileName = expand('%:t')
     if line1 =~# '^#!/' || line1 =~# '^#compdef'
         if line('$') < 2
             normal! o
