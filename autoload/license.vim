@@ -32,3 +32,22 @@ function! license#substituteCopyrightHolder(oldHolder, newHolder) abort
         echomsg a:oldHolder . 'not found'
     endif
 endfunction
+
+function! license#rmFileName(holderName) abort
+    let holderLine = search('copyright.*' . a:holderName)
+    if holderLine > 2
+        " avoid delete first line
+        execute (holderLine - 1) . 'delete'
+    else
+        echomsg a:holderName . ' not found or copyright is the first line'
+    endif
+endfunction
+
+" replace copyright line totally with newLine
+" from 'Copyright.*a:holderName' -> a:newLine
+function! license#substituteCopyrightLine(holderName, newLine) abort
+    let holderLine = search('copyright.*' . a:holderName)
+    if holderLine >= 1
+        call setline(holderLine, substitute(getline(holderLine), 'copyright.*', a:newLine, ''))
+    endif
+endfunction
